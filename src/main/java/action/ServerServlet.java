@@ -16,7 +16,7 @@ import java.util.Date;
 public class ServerServlet extends HttpServlet {
 
     private MQOperateDao mqOperateDao = new MQOperateDaoImpl();
-    private int t = 10;
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
