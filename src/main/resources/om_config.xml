@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--查询设备信息 http://app.newrocktech.com/omapi/chapter2/control/query/queryDeviceinfo.html-->
+<Control attribute="Query">
+    <DeviceInfo/>
+</Control>
+
+<!--查询分机 http://app.newrocktech.com/omapi/chapter2/control/query/queryExt.html-->
+<Control attribute="Query">
+    <ext id="208"/>
+</Control>
+
+
+
+
