@@ -1,14 +1,140 @@
-<?xml version="1.0" encoding="utf-8" ?>
-
 <!--查询设备信息 http://app.newrocktech.com/omapi/chapter2/control/query/queryDeviceinfo.html-->
+<?xml version="1.0" encoding="utf-8" ?>
 <Control attribute="Query">
     <DeviceInfo/>
 </Control>
 
 <!--查询分机 http://app.newrocktech.com/omapi/chapter2/control/query/queryExt.html-->
+<?xml version="1.0" encoding="utf-8" ?>
 <Control attribute="Query">
-    <ext id="208"/>
+    <ext id="001"/>
 </Control>
+
+
+<!-- 配置分机 -->
+<?xml version="1.0" encoding="utf-8" ?>
+<Control attribute="Assign">
+<ext lineid="Phone 1">
+    <id>001</id>
+    <staffid>0000001</staffid>
+    <mobile>15257845702</mobile>
+    <group>1</group>
+    <voicefile>busy</voicefile>
+    <Call_Restriction>2</Call_Restriction>
+    <Call_Pickup>no</Call_Pickup>
+    <No_Disturb>no</No_Disturb>
+    <Fwd_Type>1</Fwd_Type>
+    <Fwd_Number>15257845702</Fwd_Number>
+    <Fork>15257845702</Fork>
+    <WAKEUP>00:00</WAKEUP>
+    <record>on</record>
+    <autoAnswer>yes </autoAnswer>
+    <api>7</api>
+</ext>
+</Control>
+
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Control attribute="Assign">
+<ext lineid="Phone 2">
+    <id>002</id>
+    <staffid>0000002</staffid>
+    <mobile>13157027674</mobile>
+    <group>1</group>
+    <voicefile>busy</voicefile>
+    <Call_Restriction>2</Call_Restriction>
+    <Call_Pickup>no</Call_Pickup>
+    <No_Disturb>no</No_Disturb>
+    <Fwd_Type>1</Fwd_Type>
+    <Fwd_Number>13157027674</Fwd_Number>
+    <Fork>13157027674</Fork>
+    <WAKEUP>00:00</WAKEUP>
+    <record>on</record>
+    <autoAnswer>yes </autoAnswer>
+    <api>7</api>
+</ext>
+</Control>
+
+
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Control attribute="Assign">
+<ext lineid="IPPhone 1">
+    <id>101</id>
+    <staffid>1000001</staffid>
+    <mobile>15257845702</mobile>
+    <group>1</group>
+    <voicefile>busy</voicefile>
+    <Call_Restriction>2</Call_Restriction>
+    <Call_Pickup>no</Call_Pickup>
+    <No_Disturb>no</No_Disturb>
+    <Fwd_Type>1</Fwd_Type>
+    <Fwd_Number>15257845702</Fwd_Number>
+    <Fork>15257845702</Fork>
+    <WAKEUP>00:00</WAKEUP>
+    <record>on</record>
+    <autoAnswer>yes </autoAnswer>
+    <api>7</api>
+</ext>
+</Control>
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Control attribute="Assign">
+<ext lineid="IPPhone 2">
+    <id>102</id>
+    <staffid>1000002</staffid>
+    <mobile>13157027674</mobile>
+    <group>1</group>
+    <voicefile>busy</voicefile>
+    <Call_Restriction>2</Call_Restriction>
+    <Call_Pickup>no</Call_Pickup>
+    <No_Disturb>no</No_Disturb>
+    <Fwd_Type>1</Fwd_Type>
+    <Fwd_Number>13157027674</Fwd_Number>
+    <Fork>13157027674</Fork>
+    <WAKEUP>00:00</WAKEUP>
+    <record>on</record>
+    <autoAnswer>yes </autoAnswer>
+    <api>7</api>
+</ext>
+</Control>
+
+
+<!--分机呼分机-->
+<?xml version="1.0" encoding="utf-8" ?>
+<Transfer attribute="Connect">
+    <ext id="001"/>
+    <ext id="002"/>
+</Transfer>
+
+<!--分机呼外部电话-->
+<?xml version="1.0" encoding="utf-8" ?>
+<Transfer attribute="Connect">
+    <ext id="002"/>
+    <outer to="15257845702"/>
+</Transfer>
+
+<!--双向外呼（回拨）-->
+<?xml version="1.0" encoding="utf-8" ?>
+<Transfer attribute="Connect">
+    <outer to="15257845702"/>
+    <outer to="13157027674"/>
+</Transfer>
+
+
+<!--来电转分机队列-->
+<?xml version="1.0" encoding="utf-8" ?>
+<Transfer attribute="Queue">
+    <visitor id="1"/>
+    <ext id="200"/>
+</Transfer>
+
+
+
+
+
+
+
 
 
 

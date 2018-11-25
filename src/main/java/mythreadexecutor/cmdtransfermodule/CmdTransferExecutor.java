@@ -1,4 +1,4 @@
-package mythreadexecutor.transfermodule;
+package mythreadexecutor.cmdtransfermodule;
 
 import com.rabbitmq.client.*;
 import entity.QueryEntity;
@@ -11,14 +11,14 @@ import java.util.Date;
 /**
  * @Description: 这是一个线程中的execute方法实例，用来在rabbitmq里注册一个consumer消费者，去取消息队列中的信息
  */
-public class TransferExecutor implements Runnable{
+public class CmdTransferExecutor implements Runnable{
 
-    public TransferExecutor(){
+    public CmdTransferExecutor(){
 
     }
 
     public void execute(){
-        //System.out.println("[*] "+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +" TransferExecutor 方法被调用。");
+        //System.out.println("[*] "+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +" CmdTransferExecutor 方法被调用。");
 
         System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" 正在监听消息队列是否存在拨号请求...");
 
