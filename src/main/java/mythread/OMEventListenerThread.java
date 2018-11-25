@@ -19,7 +19,7 @@ public class OMEventListenerThread implements Runnable{
     private int omPort; //OM设备汇报时间的端口号
 
     public OMEventListenerThread(){
-        this.omPort = 5090;
+        this.omPort = 8081;
     }
 
     public static void start(){
@@ -50,7 +50,7 @@ public class OMEventListenerThread implements Runnable{
 
 
 
-               Thread.sleep(1000);
+               Thread.sleep(300);
             }
 
             if(clientSocket != null) clientSocket.close();

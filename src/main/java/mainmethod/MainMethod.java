@@ -11,7 +11,7 @@ public class MainMethod {
      */
     public static void main(String[] args){
 
-        CmdTransferThread.start();
+        //CmdTransferThread.start();
         OMEventListenerThread.start();
 
     }

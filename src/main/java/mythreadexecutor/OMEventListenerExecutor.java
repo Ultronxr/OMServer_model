@@ -35,7 +35,7 @@ public class OMEventListenerExecutor implements Runnable{
             String str = "";
             if(len >= 0)
                 str = new String(bytes, 0, len);
-            System.out.println(str);
+            //System.out.println(str);
 
 
 
