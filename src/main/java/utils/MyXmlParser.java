@@ -56,12 +56,4 @@ public class MyXmlParser {
     }
 
 
-    public static Element getRootElement(Document document){
-        if(document != null)
-            return document.getRootElement();
-        else
-            return null;
-    }
-
-
 }
