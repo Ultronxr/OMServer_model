@@ -12,19 +12,19 @@ public interface OMTransferDao {
      * 强拆（挂断）
      *
      */
-    public boolean Clear();
+    public boolean Clear(String param, int id);
 
     /**
      * 呼叫保持（保持）
      *
      */
-    public boolean Hold();
+    public boolean Hold(String param, int id);
 
     /**
      * 呼叫接回（抓回）
      *
      */
-    public boolean Unhold();
+    public boolean Unhold(String param, int id);
 
     /**
      * 来电转分机队列

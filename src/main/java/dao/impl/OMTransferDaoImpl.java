@@ -18,8 +18,15 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean Clear(){
-        return false;
+    public boolean Clear(String param, int id){
+
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                "<Control attribute=\"Clear\">\n" +
+                "    <"+param+" id=\""+id+"\"/>\n" +
+                "</Control>";
+        OMTransferBase.OMTransferBase("Clear 强拆（挂断）", xmlStr);
+
+        return true;
     }
 
     /**
@@ -27,8 +34,14 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean Hold(){
-        return false;
+    public boolean Hold(String param, int id){
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                "<Control attribute=\"Hold\">\n" +
+                "    <ext id=\""+id+"\"/>\n" +
+                "</Control>";
+        OMTransferBase.OMTransferBase("Hold 呼叫保持（保持）", xmlStr);
+
+        return true;
     }
 
     /**
@@ -36,8 +49,14 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean Unhold(){
-        return false;
+    public boolean Unhold(String param, int id){
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                "<Control attribute=\"Unhold\">\n" +
+                "    <ext id=\""+id+"\"/>\n" +
+                "</Control>";
+        OMTransferBase.OMTransferBase("Unhold 呼叫接回（抓回）", xmlStr);
+
+        return true;
     }
 
     /**
@@ -46,7 +65,15 @@ public class OMTransferDaoImpl implements OMTransferDao {
      */
     @Override
     public boolean QueueExt(int visitorid, int extid){
-        return false;
+
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                "<Transfer attribute=\"Queue\">\n" +
+                "  <visitor id=\""+visitorid+"\"/>\n" +
+                "    <ext id=\""+extid+"\"/>\n" +
+                "</Transfer>";
+        OMTransferBase.OMTransferBase("QueueExt 来电转分机队列", xmlStr);
+
+        return true;
     }
 
     /**
@@ -55,9 +82,14 @@ public class OMTransferDaoImpl implements OMTransferDao {
      */
     @Override
     public boolean QueueExtGroup(int visitorid, int groupid){
-        return false;
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                "<Transfer attribute=\"Queue\">\n" +
+                "  <visitor id=\""+visitorid+"\"/>\n" +
+                "  <group id=\""+groupid+"\"/>\n" +
+                "</Transfer>";
+        OMTransferBase.OMTransferBase("QueueExtGroup 来电转分机组队列", xmlStr);
+
+        return true;
     }
-
-
 
 }

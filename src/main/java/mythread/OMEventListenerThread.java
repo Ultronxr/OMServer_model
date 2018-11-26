@@ -1,6 +1,7 @@
 package mythread;
 
 import mythreadexecutor.OMEventListenerExecutor;
+import utils.MyOMConfig;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,10 +17,10 @@ import java.util.concurrent.Executors;
  */
 public class OMEventListenerThread implements Runnable{
 
-    private int omPort; //OM设备汇报时间的端口号
+    private int omListenPort; //OM设备汇报事件的端口号
 
     public OMEventListenerThread(){
-        this.omPort = 8081;
+        this.omListenPort = MyOMConfig.getListenPort();
     }
 
     public static void start(){
@@ -38,7 +39,7 @@ public class OMEventListenerThread implements Runnable{
         boolean flag = true;
 
         try{
-            serverSocket = new ServerSocket(this.omPort);
+            serverSocket = new ServerSocket(this.omListenPort);
             executorService = Executors.newFixedThreadPool(1);
 
             while(flag){

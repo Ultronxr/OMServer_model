@@ -22,7 +22,7 @@ public class MainMethod {
      */
     public static void StartMyListener(){
 
-        CmdTransferThread.start();
+        //CmdTransferThread.start();
         OMEventListenerThread.start();
 
     }
