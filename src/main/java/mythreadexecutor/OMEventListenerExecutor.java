@@ -63,60 +63,67 @@ public class OMEventListenerExecutor implements Runnable{
                 String attr = rootElement.attributeValue("attribute");
 
                 //监听到系统启动事件
-                if(attr.equals("BOOTUP") || attr.contains("BOOTUP")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" OM Event:BOOTUP 收到OM事件：OM系统启动");
+                if(attr.contains("BOOTUP")){
+                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+                            +" OM Event:BOOTUP 收到OM事件：OM系统启动");
                     OMConfigureDao omConfigureDao = new OMConfigureDaoImpl();
                     omConfigureDao.setExt();
                 }
                 //来电前控制事件
-                else if(attr.equals("INVITE") || attr.contains("INVITE")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" OM Event:INVITE 收到OM事件：外线来电-来电前控制");
+                else if(attr.contains("INVITE")){
+                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+                            +" OM Event:INVITE 收到OM事件：外线来电-来电前控制");
                     //OMTransferDao omTransferDao = new OMTransferDaoImpl();
                     //omTransferDao.QueueExt();
 
 
                 }
                 //分机响铃事件
-                else if(attr.equals("RING") || attr.contains("RING")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" OM Event:RING 收到OM事件：分机振铃");
+                else if(attr.contains("RING")){
+                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+                            +" OM Event:RING 收到OM事件：分机振铃");
 
                     int cnt = 0;
-                    ArrayList<String> extArrayList = new ArrayList<>();
+                    String[] strArray = new String[2];
                     for (Iterator i = rootElement.elementIterator(); i.hasNext(); ){
                         Element secondElement = (Element) i.next();
                         if(secondElement.getName().equals("ext") || secondElement.getName().contains("ext")){
                             //System.out.println(secondElement.attributeValue("id"));
-                            ++cnt;
-                            extArrayList.add(secondElement.attributeValue("id"));
+                            strArray[cnt++] = secondElement.attributeValue("id");
                         }
                     }
                     if(cnt == 2){ //分机拨分机的情况
                         VisitorEntity visitorEntity =  new VisitorEntity();
-                        visitorEntity.setFrom(extArrayList.get(0));
-                        visitorEntity.setExtid(Integer.valueOf(extArrayList.get(1)));
+                        visitorEntity.setFrom(strArray[0]);
+                        visitorEntity.setExtid(Integer.valueOf(strArray[1]));
                         GlobalWaitingQueue.getGlobalWaitingQueue().add(visitorEntity);
+
+                        System.out.println("***********"+GlobalWaitingQueue.getGlobalWaitingQueue().size());
                     }
 
                 }
                 //分机应答事件
-                else if(attr.equals("ANSWER") || attr.contains("ANSWER")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" OM Event:ANSWER 收到OM事件：分机应答");
+                else if(attr.contains("ANSWER")){
+                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+                            +" OM Event:ANSWER 收到OM事件：分机应答");
 
                     int cnt = 0;
-                    ArrayList<String> extArrayList = new ArrayList<>();
+                    String[] strArray = new String[2];
                     for (Iterator i = rootElement.elementIterator(); i.hasNext(); ){
                         Element secondElement = (Element) i.next();
                         if(secondElement.getName().equals("ext") || secondElement.getName().contains("ext")){
                             //System.out.println(secondElement.attributeValue("id"));
-                            ++cnt;
-                            extArrayList.add(secondElement.attributeValue("id"));
+                            strArray[cnt++] = secondElement.attributeValue("id");
                         }
                     }
                     if(cnt == 2){ //分机拨分机的情况
-                        for(VisitorEntity visitorEntity : GlobalWaitingQueue.getGlobalWaitingQueue()){
-                            if(visitorEntity.getFrom().equals(extArrayList.get(0))
-                                && visitorEntity.getExtid()==Integer.valueOf(extArrayList.get(1))){
+                        for(int i = 0; i < GlobalWaitingQueue.getGlobalWaitingQueue().size(); i++){
+                            VisitorEntity visitorEntity = GlobalWaitingQueue.getGlobalWaitingQueue().get(i);
+                            if(visitorEntity.getFrom().equals(strArray[0])
+                                    && visitorEntity.getExtid()==Integer.valueOf(strArray[1])){
                                 GlobalWaitingQueue.getGlobalWaitingQueue().remove(visitorEntity);
+
+                                System.out.println("***********"+GlobalWaitingQueue.getGlobalWaitingQueue().size());
                             }
                         }
 

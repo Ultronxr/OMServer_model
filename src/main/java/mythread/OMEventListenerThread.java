@@ -49,9 +49,7 @@ public class OMEventListenerThread implements Runnable{
                         + " OMEventListenerThread 线程获取与OM设备的socket连接："+clientSocket.getInetAddress()+":"+clientSocket.getPort());
                 executorService.execute(new OMEventListenerExecutor(clientSocket));
 
-
-
-               Thread.sleep(300);
+                Thread.sleep(300);
             }
 
             if(clientSocket != null) clientSocket.close();
