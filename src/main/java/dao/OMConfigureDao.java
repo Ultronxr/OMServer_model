@@ -11,4 +11,10 @@ public interface OMConfigureDao {
      */
     public boolean setExt();
 
+    /**
+     * 分机组配置
+     * @return boolean代表是否配置成功
+     */
+    public boolean setExtGroup();
+
 }

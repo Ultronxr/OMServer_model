@@ -67,7 +67,7 @@ public class OMEventListenerExecutor implements Runnable{
                     System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                             +" OM Event:BOOTUP 收到OM事件：OM系统启动");
                     OMConfigureDao omConfigureDao = new OMConfigureDaoImpl();
-                    omConfigureDao.setExt();
+                    omConfigureDao.setExtGroup();
                 }
                 //来电前控制事件
                 else if(attr.contains("INVITE")){
@@ -92,13 +92,20 @@ public class OMEventListenerExecutor implements Runnable{
                             strArray[cnt++] = secondElement.attributeValue("id");
                         }
                     }
-                    if(cnt == 2){ //分机拨分机的情况
+                    //分机呼分机的情况
+                    if(cnt == 2){
                         VisitorEntity visitorEntity =  new VisitorEntity();
                         visitorEntity.setFrom(strArray[0]);
                         visitorEntity.setExtid(Integer.valueOf(strArray[1]));
                         GlobalWaitingQueue.getGlobalWaitingQueue().add(visitorEntity);
 
                         System.out.println("***********"+GlobalWaitingQueue.getGlobalWaitingQueue().size());
+                    }
+                    //来电呼分机的情况
+                    else if(cnt == 1){
+                        VisitorEntity visitorEntity =  new VisitorEntity();
+                        rootElement.element("ext");
+                        rootElement.element("visitor");
                     }
 
                 }
