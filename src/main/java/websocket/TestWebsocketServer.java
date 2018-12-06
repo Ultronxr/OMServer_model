@@ -40,6 +40,7 @@ public class TestWebsocketServer {
     @OnClose
     public void onClose(){
         System.out.println("连接关闭："+this.token);
+        minusOnlineCount();
     }
 
     @OnMessage

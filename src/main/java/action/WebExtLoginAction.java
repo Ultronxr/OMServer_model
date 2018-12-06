@@ -1,5 +1,7 @@
 package action;
 
+import dao.ExtJdbcDao;
+import dao.impl.ExtJdbcDaoImpl;
 import entity.ExtLoginEntity;
 import global.GlobalWebExtTokens;
 
@@ -12,6 +14,8 @@ import java.io.PrintWriter;
 
 public class WebExtLoginAction extends HttpServlet {
 
+    private ExtJdbcDao extJdbcDao = new ExtJdbcDaoImpl();
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -20,28 +24,30 @@ public class WebExtLoginAction extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        PrintWriter pw = response.getWriter();
 
-        System.out.println("username="+username+"  password="+password);
+        String username = request.getParameter("username"),
+               password = request.getParameter("password");
+        String resData = "";
+        //System.out.println("username="+username+"  password="+password);
 
-        if(username.equals("231") && password.equals("123456")){
-            PrintWriter pw = response.getWriter();
-            String token = "1jkldsafio59932lkjk234jkln34bn56n23";
-            ExtLoginEntity extLoginEntity = new ExtLoginEntity();
-            extLoginEntity.setLineid("Line 10");
-            extLoginEntity.setExtid("231");
-            extLoginEntity.setGroupid("1");
-            extLoginEntity.setPassword("123456");
-            extLoginEntity.setAuthcode("123231");
+        ExtLoginEntity extLoginEntity = extJdbcDao.getExtByExtid(username);
 
-            GlobalWebExtTokens.getGlobalWebExtLoginTokensMap().put(token, extLoginEntity);
+        if(extLoginEntity != null && extLoginEntity.getPassword().equals(password)){
+            String tokenHashValue =  "dasf797fd9sa65sagdoiost9h79sjk2012";
+            resData = "{\"result\":\""+tokenHashValue+"\"}";
 
-            String json_data = "{\"token\":\""+token+"\"}";
-            pw.write(json_data);
-            pw.flush();
-            pw.close();
+            GlobalWebExtTokens.getGlobalWebExtLoginTokensMap().put(tokenHashValue, extLoginEntity);
+
+        }else{
+            resData = "{\"result\":\"NULLDATA\"}";
         }
+
+        System.out.println(resData);
+
+        pw.write(resData);
+        pw.flush();
+        //pw.close();
 
     }
 
