@@ -9,7 +9,7 @@ public class MyListener implements ServletContextListener{
 
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
-        MainMethod.StartMyListener();
+        //MainMethod.StartMyListener();
     }
 
 //    @Override

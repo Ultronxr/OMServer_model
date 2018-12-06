@@ -12,19 +12,29 @@
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
+    <!--<welcome-file>TestWebsocketServer.jsp</welcome-file>-->
   </welcome-file-list>
 
   <listener>
     <listener-class>mylistener.MyListener</listener-class>
   </listener>
 
+  <!--<servlet>-->
+    <!--<servlet-name>ServerServlet</servlet-name>-->
+    <!--<servlet-class>action.ServerServlet</servlet-class>-->
+  <!--</servlet>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>ServerServlet</servlet-name>-->
+    <!--<url-pattern>/ServerServlet</url-pattern>-->
+  <!--</servlet-mapping>-->
+
   <servlet>
-    <servlet-name>ServerServlet</servlet-name>
-    <servlet-class>action.ServerServlet</servlet-class>
+    <servlet-name>webExtLoginAction</servlet-name>
+    <servlet-class>action.WebExtLoginAction</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ServerServlet</servlet-name>
-    <url-pattern>/ServerServlet</url-pattern>
+    <servlet-name>webExtLoginAction</servlet-name>
+    <url-pattern>/webExtLogin.jhtml</url-pattern>
   </servlet-mapping>
 
 </web-app>
