@@ -25,11 +25,15 @@
                 data:ajax_data,
                 dataType:'json',
                 success:function(msg){
-                    if(msg.result == "NULLDATA"){
+                    if(msg.result == "ERROR"){
                         alert("账户或密码错误！")
+                    }
+                    else if(msg.result == "HAVELOGINED"){
+                        alert("分机"+input_username+" 已经登录！")
                     }
                     else{
                         token = msg.result;
+                        alert(msg.result);
                         getWebSocektConnect(token);
                     }
                 }

@@ -4,6 +4,7 @@ import dao.ExtJdbcDao;
 import dao.impl.ExtJdbcDaoImpl;
 import entity.ExtLoginEntity;
 import global.GlobalWebExtTokens;
+import utils.MyMD5Hash;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 public class WebExtLoginAction extends HttpServlet {
 
@@ -34,13 +36,22 @@ public class WebExtLoginAction extends HttpServlet {
         ExtLoginEntity extLoginEntity = extJdbcDao.getExtByExtid(username);
 
         if(extLoginEntity != null && extLoginEntity.getPassword().equals(password)){
-            String tokenHashValue =  "dasf797fd9sa65sagdoiost9h79sjk2012";
-            resData = "{\"result\":\""+tokenHashValue+"\"}";
 
-            GlobalWebExtTokens.getGlobalWebExtLoginTokensMap().put(tokenHashValue, extLoginEntity);
+            //extid+authcode然后进行MD5 hash作为token
+            String tokenTemp = extLoginEntity.getExtid()+extLoginEntity.getAuthcode();
+            String tokenMd5 = MyMD5Hash.stringToMd5LowerCase(tokenTemp);
+
+            if(GlobalWebExtTokens.getOnlineTokensMap().containsKey(tokenMd5)){
+                resData = "{\"result\":\"HAVELOGINED\"}";
+            }
+            else{
+                GlobalWebExtTokens.getLoginTokensMap().put(tokenMd5, extLoginEntity);
+                resData = "{\"result\":\""+tokenMd5+"\"}";
+            }
+
 
         }else{
-            resData = "{\"result\":\"NULLDATA\"}";
+            resData = "{\"result\":\"ERROR\"}";
         }
 
         System.out.println(resData);

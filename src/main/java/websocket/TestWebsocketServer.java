@@ -13,22 +13,21 @@ import java.util.Map;
 @ServerEndpoint(value = "/websocket/{token}")
 public class TestWebsocketServer {
 
-    private static int onlineCount = 0;
-
     private String token;
-    private Map<String, ExtLoginEntity> onlineExtTokenMap = new HashMap<>();
     private Session session;
 
     @OnOpen
     public void onOpen(@PathParam("token") String token, Session session) throws IOException {
-        boolean flag = GlobalWebExtTokens.getGlobalWebExtLoginTokensMap().containsKey(token);
+        boolean flag = GlobalWebExtTokens.getLoginTokensMap().containsKey(token);
         if(flag){
             this.token = token;
-            this.onlineExtTokenMap.put(this.token, GlobalWebExtTokens.getGlobalWebExtLoginTokensMap().get(this.token));
+            GlobalWebExtTokens.getOnlineTokensMap().put(
+                    this.token, GlobalWebExtTokens.getLoginTokensMap().get(this.token));
             this.session = session;
-            addOnlineCount();
             System.out.println("新连接："+token);
-            session.getBasicRemote().sendText("欢迎登录："+this.onlineExtTokenMap.get(this.token).getExtid()+" 号分机");
+            System.out.println("当前在线数："+GlobalWebExtTokens.getOnlineTokensMap().size());
+            session.getBasicRemote().sendText("欢迎登录："
+                    + GlobalWebExtTokens.getOnlineTokensMap().get(this.token).getExtid() +" 号分机");
         }
         else{
             System.out.println("拒绝访问！！！错误的token："+token);
@@ -38,9 +37,10 @@ public class TestWebsocketServer {
 
 
     @OnClose
-    public void onClose(){
+    public void onClose() throws IOException {
+        this.session.close();
+        GlobalWebExtTokens.getOnlineTokensMap().remove(this.token);
         System.out.println("连接关闭："+this.token);
-        minusOnlineCount();
     }
 
     @OnMessage
@@ -50,17 +50,10 @@ public class TestWebsocketServer {
     }
 
     @OnError
-    public void onError(Session session, Throwable err){
+    public void onError(Session session, Throwable e) throws IOException {
+        this.session.close();
         System.out.println("连接错误："+this.token);
-        err.printStackTrace();
+        //e.printStackTrace();
     }
 
-
-    public synchronized void addOnlineCount(){
-        TestWebsocketServer.onlineCount++;
-    }
-
-    public synchronized void minusOnlineCount(){
-        TestWebsocketServer.onlineCount--;
-    }
 }
