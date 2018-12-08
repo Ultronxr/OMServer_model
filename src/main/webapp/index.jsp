@@ -53,7 +53,13 @@
 
                 //接收到消息的回调方法
                 websocket.onmessage = function(event){
-                    setMessageInnerHTML(event.data);
+                    if(typeof event.data == "String" || typeof event.data == "string"){
+                        setMessageInnerHTML(event.data);
+                    }else{
+                        //setMessageInnerHTML(typeof event.data);
+                        setMessageInnerHTML(event.data);
+                    }
+
                 };
 
                 //连接关闭的回调方法
@@ -134,7 +140,7 @@
 
 
     <%--<h2>Use form below to send test query:</h2>--%>
-    <%--<form id="uploadForm" method="get" action="/OMServer_model/ServerServlet">--%>
+    <%--<form id="uploadForm" method="get" action="/OMServer_model/__ServerServlet">--%>
         <%--<ul style="">--%>
             <%--<li>--%>
                 <%--<input type="text" id="attr" name="attr">--%>

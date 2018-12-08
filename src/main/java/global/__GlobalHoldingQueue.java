@@ -4,7 +4,7 @@ import entity.VisitorEntity;
 
 import java.util.ArrayList;
 
-public class GlobalHoldingQueue {
+public class __GlobalHoldingQueue {
     private static ArrayList<VisitorEntity> globalHoldingQueue;
 
     public static ArrayList<VisitorEntity> getGlobalHoldingQueue() {
@@ -12,6 +12,6 @@ public class GlobalHoldingQueue {
     }
 
     public static void setGlobalHoldingQueue(ArrayList<VisitorEntity> globalHoldingQueue) {
-        GlobalHoldingQueue.globalHoldingQueue = globalHoldingQueue;
+        __GlobalHoldingQueue.globalHoldingQueue = globalHoldingQueue;
     }
 }

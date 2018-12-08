@@ -1,16 +1,18 @@
 package entity;
 
-public class QueryEntity {
+import java.io.Serializable;
+
+public class __QueryEntity implements Serializable {
 
     private String attribute;
     private String ext_id_from;
     private String ext_id_to;
 
-    public QueryEntity(){
+    public __QueryEntity(){
 
     }
 
-    public QueryEntity(String attribute, String ext_id_from, String ext_id_to){
+    public __QueryEntity(String attribute, String ext_id_from, String ext_id_to){
         this.attribute = attribute;
         this.ext_id_from = ext_id_from;
         this.ext_id_to = ext_id_to;

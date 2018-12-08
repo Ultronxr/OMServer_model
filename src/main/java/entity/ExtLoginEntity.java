@@ -1,6 +1,8 @@
 package entity;
 
-public class ExtLoginEntity {
+import java.io.Serializable;
+
+public class ExtLoginEntity implements Serializable {
 
     private String lineid;
     private String extid;

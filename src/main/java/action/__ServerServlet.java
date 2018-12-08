@@ -2,7 +2,7 @@ package action;
 
 import dao.MQOperateDao;
 import dao.impl.MQOperateDaoImpl;
-import entity.QueryEntity;
+import entity.__QueryEntity;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ServerServlet extends HttpServlet {
+public class __ServerServlet extends HttpServlet {
 
     private MQOperateDao mqOperateDao = new MQOperateDaoImpl();
 
@@ -27,7 +27,7 @@ public class ServerServlet extends HttpServlet {
         String attribute = request.getParameter("attr");
         String ext_id_from = request.getParameter("ext_id_from");
         String ext_id_to = request.getParameter("ext_id_to");
-        QueryEntity queryEntity = new QueryEntity(attribute, ext_id_from, ext_id_to);
+        __QueryEntity queryEntity = new __QueryEntity(attribute, ext_id_from, ext_id_to);
 
         System.out.println("[*] "+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " Step_01 接收到新的拨号请求："+queryEntity.toString());
 

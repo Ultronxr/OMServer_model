@@ -1,7 +1,7 @@
 package action;
 
 import entity.VisitorEntity;
-import global.GlobalWaitingQueue;
+import global.__GlobalWaitingQueue;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ public class GetWaitingQueueAction extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<VisitorEntity> waitingQueue = GlobalWaitingQueue.getGlobalWaitingQueue();
+        ArrayList<VisitorEntity> waitingQueue = __GlobalWaitingQueue.getGlobalWaitingQueue();
         request.setAttribute("WaitingQueue", waitingQueue);
     }
 

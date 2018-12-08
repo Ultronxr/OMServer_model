@@ -4,7 +4,7 @@ import entity.VisitorEntity;
 
 import java.util.ArrayList;
 
-public class GlobalWaitingQueue {
+public class __GlobalWaitingQueue {
     private static ArrayList<VisitorEntity> globalWaitingQueue = new ArrayList<>();
 
     public static ArrayList<VisitorEntity> getGlobalWaitingQueue() {
@@ -12,6 +12,6 @@ public class GlobalWaitingQueue {
     }
 
     public static void setGlobalWaitingQueue(ArrayList<VisitorEntity> globalWaitingQueue) {
-        GlobalWaitingQueue.globalWaitingQueue = globalWaitingQueue;
+        __GlobalWaitingQueue.globalWaitingQueue = globalWaitingQueue;
     }
 }

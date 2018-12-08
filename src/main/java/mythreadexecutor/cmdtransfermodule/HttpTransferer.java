@@ -1,6 +1,6 @@
 package mythreadexecutor.cmdtransfermodule;
 
-import entity.QueryEntity;
+import entity.__QueryEntity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HttpTransferer {
-    public static void HttpTransferer(QueryEntity queryEntity){
+    public static void HttpTransferer(__QueryEntity queryEntity){
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";

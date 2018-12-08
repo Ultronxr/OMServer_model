@@ -2,7 +2,7 @@ package global;
 
 import entity.VisitorEntity;
 
-public class GlobalAnsweringVisitor {
+public class __GlobalAnsweringVisitor {
 
     private static VisitorEntity visitorEntity;
 
@@ -11,6 +11,6 @@ public class GlobalAnsweringVisitor {
     }
 
     public static void setVisitorEntity(VisitorEntity visitorEntity) {
-        GlobalAnsweringVisitor.visitorEntity = visitorEntity;
+        __GlobalAnsweringVisitor.visitorEntity = visitorEntity;
     }
 }

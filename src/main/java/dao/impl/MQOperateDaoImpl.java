@@ -4,16 +4,13 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import dao.MQOperateDao;
-import entity.QueryEntity;
+import entity.__QueryEntity;
 import utils.databases.MyRabbitMQ;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MQOperateDaoImpl implements MQOperateDao {
 
     @Override
-    public boolean transferToMQ(QueryEntity queryEntity){
+    public boolean transferToMQ(__QueryEntity queryEntity){
         ConnectionFactory connFactory = MyRabbitMQ.getConnFactory();
         Connection connection = MyRabbitMQ.getConnection(connFactory);
         Channel channel = MyRabbitMQ.getChannel(connection);

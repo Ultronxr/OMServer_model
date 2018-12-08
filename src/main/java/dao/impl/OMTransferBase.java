@@ -1,6 +1,5 @@
 package dao.impl;
 
-import entity.QueryEntity;
 import utils.MyOMConfig;
 
 import java.io.BufferedReader;

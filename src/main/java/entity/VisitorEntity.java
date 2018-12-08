@@ -1,6 +1,8 @@
 package entity;
 
-public class VisitorEntity {
+import java.io.Serializable;
+
+public class VisitorEntity implements Serializable {
     private int id; //来电编号
     private String from; //电话号码
     private String to; //中继线

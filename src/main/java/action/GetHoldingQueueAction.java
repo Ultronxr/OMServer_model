@@ -1,7 +1,7 @@
 package action;
 
 import entity.VisitorEntity;
-import global.GlobalHoldingQueue;
+import global.__GlobalHoldingQueue;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ public class GetHoldingQueueAction extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<VisitorEntity> holdingQueue = GlobalHoldingQueue.getGlobalHoldingQueue();
+        ArrayList<VisitorEntity> holdingQueue = __GlobalHoldingQueue.getGlobalHoldingQueue();
         request.setAttribute("HoldingQueue", holdingQueue);
     }
 

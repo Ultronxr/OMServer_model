@@ -1,23 +1,17 @@
 package mythreadexecutor;
 
 import dao.OMConfigureDao;
-import dao.OMTransferDao;
 import dao.impl.OMConfigureDaoImpl;
-import dao.impl.OMTransferDaoImpl;
 import entity.VisitorEntity;
-import global.GlobalHoldingQueue;
-import global.GlobalWaitingQueue;
+import global.__GlobalWaitingQueue;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import utils.MyXmlParser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -97,9 +91,9 @@ public class OMEventListenerExecutor implements Runnable{
                         VisitorEntity visitorEntity =  new VisitorEntity();
                         visitorEntity.setFrom(strArray[0]);
                         visitorEntity.setExtid(Integer.valueOf(strArray[1]));
-                        GlobalWaitingQueue.getGlobalWaitingQueue().add(visitorEntity);
+                        __GlobalWaitingQueue.getGlobalWaitingQueue().add(visitorEntity);
 
-                        System.out.println("***********"+GlobalWaitingQueue.getGlobalWaitingQueue().size());
+                        System.out.println("***********"+ __GlobalWaitingQueue.getGlobalWaitingQueue().size());
                     }
                     //来电呼分机的情况
                     else if(cnt == 1){
@@ -124,13 +118,13 @@ public class OMEventListenerExecutor implements Runnable{
                         }
                     }
                     if(cnt == 2){ //分机拨分机的情况
-                        for(int i = 0; i < GlobalWaitingQueue.getGlobalWaitingQueue().size(); i++){
-                            VisitorEntity visitorEntity = GlobalWaitingQueue.getGlobalWaitingQueue().get(i);
+                        for(int i = 0; i < __GlobalWaitingQueue.getGlobalWaitingQueue().size(); i++){
+                            VisitorEntity visitorEntity = __GlobalWaitingQueue.getGlobalWaitingQueue().get(i);
                             if(visitorEntity.getFrom().equals(strArray[0])
                                     && visitorEntity.getExtid()==Integer.valueOf(strArray[1])){
-                                GlobalWaitingQueue.getGlobalWaitingQueue().remove(visitorEntity);
+                                __GlobalWaitingQueue.getGlobalWaitingQueue().remove(visitorEntity);
 
-                                System.out.println("***********"+GlobalWaitingQueue.getGlobalWaitingQueue().size());
+                                System.out.println("***********"+ __GlobalWaitingQueue.getGlobalWaitingQueue().size());
                             }
                         }
 

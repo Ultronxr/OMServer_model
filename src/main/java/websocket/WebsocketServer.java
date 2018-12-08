@@ -1,20 +1,31 @@
 package websocket;
 
+import com.alibaba.fastjson.JSON;
 import entity.ExtLoginEntity;
+import entity.VisitorEntity;
 import global.GlobalWebExtTokens;
+import utils.MySerializeUtil;
+import websocket.messagebean.WaitingQueueMB;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.io.Serializable;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 @ServerEndpoint(value = "/websocket/{token}")
-public class TestWebsocketServer {
+public class WebsocketServer {
 
     private String token;
     private Session session;
+    private ArrayList<VisitorEntity> holdingQueue = new ArrayList<>();
+    private ArrayList<VisitorEntity> waitingQueue = new ArrayList<>();
+    private int testCount = 0;
 
     @OnOpen
     public void onOpen(@PathParam("token") String token, Session session) throws IOException {
@@ -28,6 +39,16 @@ public class TestWebsocketServer {
             System.out.println("当前在线数："+GlobalWebExtTokens.getOnlineTokensMap().size());
             session.getBasicRemote().sendText("欢迎登录："
                     + GlobalWebExtTokens.getOnlineTokensMap().get(this.token).getExtid() +" 号分机");
+
+            session.getBasicRemote().sendText(this.session.getId());
+
+            this.testCount++;
+            this.session.getBasicRemote().sendText(String.valueOf(testCount));
+
+//            VisitorEntity ve = new VisitorEntity();
+//            ve.setExtid(999);
+//            this.waitingQueue.add(ve);
+//            session.getBasicRemote().sendText(JSON.toJSONString(new WaitingQueueMB(waitingQueue)));
         }
         else{
             System.out.println("拒绝访问！！！错误的token："+token);

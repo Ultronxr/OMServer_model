@@ -1,7 +1,7 @@
 package mythreadexecutor.cmdtransfermodule;
 
 import com.rabbitmq.client.*;
-import entity.QueryEntity;
+import entity.__QueryEntity;
 import utils.databases.MyRabbitMQ;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class CmdTransferExecutor implements Runnable{
                     String str_ext_id_to = message.substring(index_ext_id_to+10);
 
                     System.out.println("获取的请求内容："+ str_attribute + " " + str_ext_id_from + " " + str_ext_id_to);
-                    HttpTransferer.HttpTransferer(new QueryEntity(str_attribute, str_ext_id_from, str_ext_id_to));
+                    HttpTransferer.HttpTransferer(new __QueryEntity(str_attribute, str_ext_id_from, str_ext_id_to));
                     //手动确认消息消费完成
                     channel.basicAck(envelope.getDeliveryTag(), false);
 

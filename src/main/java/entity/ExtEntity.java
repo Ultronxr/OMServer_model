@@ -1,4 +1,6 @@
 package entity;
 
-public class ExtEntity {
+import java.io.Serializable;
+
+public class ExtEntity implements Serializable {
 }
