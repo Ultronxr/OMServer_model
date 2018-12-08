@@ -40,6 +40,19 @@
             });
         }
 
+        function connectSubmit(){
+            var extid1 = $("#extid1").val();
+            var extid2 = $("#extid2").val();
+            var ajax_data = {extid1:extid1,extid2:extid2};
+            $.ajax({
+                async: false,
+                cache: false,
+                type:"POST",
+                url:"/OMServer_model/connect.jhtml",
+                data:ajax_data
+            });
+        }
+
         function getWebSocektConnect(token) {
             console.log(token);
 
@@ -56,8 +69,7 @@
                     if(typeof event.data == "String" || typeof event.data == "string"){
                         setMessageInnerHTML(event.data);
                     }else{
-                        //setMessageInnerHTML(typeof event.data);
-                        setMessageInnerHTML(event.data);
+                        setMessageInnerHTML("Error message type : "+typeof event.data);
                     }
 
                 };
@@ -88,7 +100,7 @@
         //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
         window.onbeforeunload = function(){
             websocket.close();
-            getWebSocektConnect(token);
+            //getWebSocektConnect(token);
         };
 
 
@@ -138,6 +150,22 @@
     <button   onclick="closeWebSocket()"> Close </button>
     <div id="message">   </div>
 
+
+    <div>
+        <form name="connectExtToExtForm" id="connectExtToExtForm">
+            <ul>
+                <li>
+                    <input type="text" name="" id="extid1">
+                </li>
+                <li>
+                    <input type="text" name="" id="extid2">
+                </li>
+                <li>
+                    <button type="button" name="" id="button_submit_ext" onclick="connectSubmit()">拨号</button>
+                </li>
+            </ul>
+        </form>
+    </div>
 
     <%--<h2>Use form below to send test query:</h2>--%>
     <%--<form id="uploadForm" method="get" action="/OMServer_model/__ServerServlet">--%>

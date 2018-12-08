@@ -5,12 +5,20 @@ import dao.OMTransferDao;
 public class OMTransferDaoImpl implements OMTransferDao {
 
     /**
-     * 连接
+     * 连接：分机呼分机
      *
      */
     @Override
-    public boolean Connect(){
-        return false;
+    public boolean ConnectExtToExt(String param, int extid1, int extid2){
+
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+                "<Transfer attribute=\"Connect\">\n" +
+                "    <ext id=\""+extid1+"\"/>\n" +
+                "    <ext id=\""+extid2+"\"/>\n" +
+                "</Transfer>";
+        OMTransferBase.OMTransferBase("Connect 连接：分机呼分机", xmlStr);
+
+        return true;
     }
 
     /**

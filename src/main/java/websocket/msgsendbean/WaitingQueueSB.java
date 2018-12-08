@@ -1,19 +1,19 @@
-package websocket.messagebean;
+package websocket.msgsendbean;
 
 import entity.VisitorEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WaitingQueueMB implements Serializable {
+public class WaitingQueueSB implements Serializable {
 
     private ArrayList<VisitorEntity> waitingQueue;
 
-    public WaitingQueueMB(){
+    public WaitingQueueSB(){
 
     }
 
-    public WaitingQueueMB(ArrayList<VisitorEntity> wq){
+    public WaitingQueueSB(ArrayList<VisitorEntity> wq){
         this.waitingQueue = wq;
     }
 

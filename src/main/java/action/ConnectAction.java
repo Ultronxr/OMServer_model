@@ -15,7 +15,10 @@ public class ConnectAction extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String extid1 = request.getParameter("extid1");
+        String extid2 = request.getParameter("extid2");
 
+        omTransferDao.ConnectExtToExt(null, Integer.valueOf(extid1), Integer.valueOf(extid2));
     }
 
     @Override

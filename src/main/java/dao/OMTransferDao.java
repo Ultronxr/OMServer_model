@@ -3,10 +3,10 @@ package dao;
 public interface OMTransferDao {
 
     /**
-     * 连接
+     * 连接：分机呼分机
      *
      */
-    public boolean Connect();
+    public boolean ConnectExtToExt(String param, int extid1, int extid2);
 
     /**
      * 强拆（挂断）

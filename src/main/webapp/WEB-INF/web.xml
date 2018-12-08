@@ -28,6 +28,15 @@
   <!--</servlet-mapping>-->
 
   <servlet>
+    <servlet-name>connectAction</servlet-name>
+    <servlet-class>action.ConnectAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>connectAction</servlet-name>
+    <url-pattern>/connect.jhtml</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>webExtLoginAction</servlet-name>
     <servlet-class>action.WebExtLoginAction</servlet-class>
   </servlet>
