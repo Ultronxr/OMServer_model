@@ -1,7 +1,7 @@
 package action;
 
-import dao.MQOperateDao;
-import dao.impl.MQOperateDaoImpl;
+import dao.__MQOperateDao;
+import dao.impl.__MQOperateDaoImpl;
 import entity.__QueryEntity;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class __ServerServlet extends HttpServlet {
 
-    private MQOperateDao mqOperateDao = new MQOperateDaoImpl();
+    private __MQOperateDao mqOperateDao = new __MQOperateDaoImpl();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

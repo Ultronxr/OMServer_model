@@ -1,12 +1,15 @@
 package mythreadexecutor;
 
 import dao.OMConfigureDao;
+import dao.OMTransferDao;
 import dao.impl.OMConfigureDaoImpl;
+import dao.impl.OMTransferDaoImpl;
 import entity.VisitorEntity;
 import global.__GlobalWaitingQueue;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import utils.MyXmlParser;
+import websocket.WebsocketPool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +40,10 @@ public class OMEventListenerExecutor implements Runnable{
         InputStream inputStream = null;
 
         try{
+
+            OMConfigureDao omConfigureDao = new OMConfigureDaoImpl();
+            OMTransferDao omTransferDao = new OMTransferDaoImpl();
+
             inputStream = clientSocket.getInputStream();
 
             byte[] bytes = new byte[2048];
@@ -53,6 +60,8 @@ public class OMEventListenerExecutor implements Runnable{
 
             Document document = MyXmlParser.stringXmlParser(resultStr);
             Element rootElement = document.getRootElement();
+
+            //监听事件Event
             if(rootElement.getName().equals("Event")){
                 String attr = rootElement.attributeValue("attribute");
 
@@ -60,16 +69,16 @@ public class OMEventListenerExecutor implements Runnable{
                 if(attr.contains("BOOTUP")){
                     System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                             +" OM Event:BOOTUP 收到OM事件：OM系统启动");
-                    OMConfigureDao omConfigureDao = new OMConfigureDaoImpl();
                     omConfigureDao.setExtGroup();
                 }
                 //来电前控制事件
                 else if(attr.contains("INVITE")){
                     System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
                             +" OM Event:INVITE 收到OM事件：外线来电-来电前控制");
-                    //OMTransferDao omTransferDao = new OMTransferDaoImpl();
-                    //omTransferDao.QueueExt();
+                    String visitorid = rootElement.element("visitor").attributeValue("id");
 
+                    //直接把所有来电请求转接到分机组队列group1(坐席)中
+                    omTransferDao.QueueExtGroup(Integer.valueOf(visitorid), 1);
 
                 }
                 //分机响铃事件
@@ -88,12 +97,16 @@ public class OMEventListenerExecutor implements Runnable{
                     }
                     //分机呼分机的情况
                     if(cnt == 2){
-                        VisitorEntity visitorEntity =  new VisitorEntity();
-                        visitorEntity.setFrom(strArray[0]);
-                        visitorEntity.setExtid(Integer.valueOf(strArray[1]));
-                        __GlobalWaitingQueue.getGlobalWaitingQueue().add(visitorEntity);
+                        //不用处理
+                        //VisitorEntity visitorEntity =  new VisitorEntity();
+                        //visitorEntity.setFrom(strArray[0]);
+                        //visitorEntity.setExtid(Integer.valueOf(strArray[1]));
+                        //__GlobalWaitingQueue.getGlobalWaitingQueue().add(visitorEntity);
 
-                        System.out.println("***********"+ __GlobalWaitingQueue.getGlobalWaitingQueue().size());
+                        //System.out.println("***********"+ __GlobalWaitingQueue.getGlobalWaitingQueue().size());
+
+
+                        //WebsocketPool.sendMessageToOneWsEndPoint("227", "dasfsadgsag");
                     }
                     //来电呼分机的情况
                     else if(cnt == 1){
