@@ -26,6 +26,9 @@ public class WebExtLoginAction extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        response.setContentType("application/json;charset=utf-8");
+        response.setCharacterEncoding("UTF-8");
+        response.addHeader("Access-Control-Allow-Origin", "*");
         PrintWriter pw = response.getWriter();
 
         String username = request.getParameter("username"),
@@ -54,11 +57,12 @@ public class WebExtLoginAction extends HttpServlet {
             resData = "{\"result\":\"ERROR\"}";
         }
 
-        System.out.println(resData);
+        //System.out.println(resData);
 
         pw.write(resData);
         pw.flush();
         //pw.close();
+        System.out.println("[*] src.main.java.action-WebExtLoginAction-doPost() 结果返回完成："+resData);
 
     }
 

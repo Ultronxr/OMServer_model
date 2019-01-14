@@ -9,11 +9,15 @@ import global.__GlobalWaitingQueue;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import utils.MyXmlParser;
+import utils.databases.MyMysql;
 import websocket.WebsocketPool;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -51,11 +55,12 @@ public class OMEventListenerExecutor implements Runnable{
             String str = "";
             if(len >= 0)
                 str = new String(bytes, 0, len);
+            //System.out.println(str);
 
             int xmlStartIndex = str.indexOf("<");
             int xmlEndIndex = str.lastIndexOf(">");
             String resultStr = str.substring(xmlStartIndex, xmlEndIndex+1);
-            System.out.println(resultStr);
+            //System.out.println(resultStr);
 
 
             Document document = MyXmlParser.stringXmlParser(resultStr);
@@ -63,6 +68,18 @@ public class OMEventListenerExecutor implements Runnable{
 
             //监听事件Event
             if(rootElement.getName().equals("Event")){
+
+                //测试OM20设备能否访问到阿里云的OMServer，收到OM20设备的报文则写点东西进数据库
+//                Connection connection = MyMysql.getConnection();
+//                String sql = "insert into temp values(\"11\")";
+//                PreparedStatement ps=null;
+//                try{
+//                    ps=connection.prepareStatement(sql);
+//                    ps.executeUpdate();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+
                 String attr = rootElement.attributeValue("attribute");
 
                 //监听到系统启动事件

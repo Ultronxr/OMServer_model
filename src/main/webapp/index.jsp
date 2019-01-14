@@ -26,10 +26,10 @@
                 dataType:'json',
                 success:function(msg){
                     if(msg.result == "ERROR"){
-                        alert("账户或密码错误！")
+                        alert("账户或密码错误！");
                     }
                     else if(msg.result == "HAVELOGINED"){
-                        alert("分机"+input_username+" 已经登录！")
+                        alert("分机"+input_username+" 已经登录！");
                     }
                     else{
                         token = msg.result;
@@ -53,45 +53,45 @@
             });
         }
 
-        function getWebSocektConnect(token) {
-            console.log(token);
+      function getWebSocektConnect(token) {
+        console.log(token);
 
-            if('WebSocket' in window){
-                websocket = new WebSocket(websocket_url+"/"+token);
+        if('WebSocket' in window){
+            websocket = new WebSocket(websocket_url+"/"+token);
 
-                //连接成功建立的回调方法
-                websocket.onopen = function(event){
-                    setMessageInnerHTML("open");
-                };
+            //连接成功建立的回调方法
+            websocket.onopen = function(event){
+                setMessageInnerHTML("open");
+            };
 
-                //接收到消息的回调方法
-                websocket.onmessage = function(event){
-                    if(typeof event.data == "String" || typeof event.data == "string"){
-                        setMessageInnerHTML(event.data);
-                    }else{
-                        setMessageInnerHTML("Error message type : "+typeof event.data);
-                    }
+            //接收到消息的回调方法
+            websocket.onmessage = function(event){
+                if(typeof event.data == "String" || typeof event.data == "string"){
+                    setMessageInnerHTML(event.data);
+                }else{
+                    setMessageInnerHTML("Error message type : "+typeof event.data);
+                }
 
-                };
+            };
 
-                //连接关闭的回调方法
-                websocket.onclose = function(){
-                    setMessageInnerHTML("close");
-                    websocket.close();
-                };
+            //连接关闭的回调方法
+            websocket.onclose = function(){
+                setMessageInnerHTML("close");
+                websocket.close();
+            };
 
-                //连接发生错误的回调方法
-                websocket.onerror = function(){
-                    setMessageInnerHTML("error");
-                };
+            //连接发生错误的回调方法
+            websocket.onerror = function(){
+                setMessageInnerHTML("error");
+            };
 
 
-                setMessageInnerHTML("websocket link success");
-                console.log("link success");
-            }else{
-                alert('Not support websocket');
-            }
+            setMessageInnerHTML("websocket link success");
+            console.log("link success");
+        }else{
+            alert('Not support websocket');
         }
+      }
 
 
 

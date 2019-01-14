@@ -25,15 +25,17 @@ public class WebsocketPool {
         --size;
     }
 
-
+    //获取当前连接池大小（大小的意思是连接的数量）
     public synchronized static int getWsPoolSize(){
         return WebsocketPool.size;
     }
 
+    //获取一个指定分机号的ws连接
     public synchronized static WebsocketEndPoint getWsEndPoint(String extid){
         return WebsocketPool.wsPool.get(extid);
     }
-
+//192.168.0.150:8081
+    //发送信息给指定分机
     public synchronized static void sendMessageToOneWsEndPoint(String extid, String msg){
         WebsocketEndPoint wsed =  WebsocketPool.wsPool.get(extid);
         if(wsed != null){
@@ -42,11 +44,11 @@ public class WebsocketPool {
                 //System.out.println("信息发送成功 : "+extid);
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("[x] Exception Trace: src.main.java.websocket--WebsocketPool:sendMessageToOneWsEndPoint" +"\n"+
+                System.out.println("[x] src.main.java.websocket-WebsocketPool-sendMessageToOneWsEndPoint()" +"\n"+
                         "   异常：无法向指定EndPoint发送信息。");
             }
         }else {
-            System.out.println("[x] Error Trace: src.main.java.websocket--WebsocketPool:sendMessageToOneWsEndPoint" +"\n"+
+            System.out.println("[x] src.main.java.websocket-WebsocketPool-sendMessageToOneWsEndPoint()" +"\n"+
                     "   错误：不存在指定的EndPoint："+extid);
         }
     }
