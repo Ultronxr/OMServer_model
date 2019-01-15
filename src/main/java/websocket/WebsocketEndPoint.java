@@ -88,15 +88,16 @@ public class WebsocketEndPoint {
 
             JSONObject jobj3 = new JSONObject(), jobj4 = new JSONObject();
             jobj3.put("response","2");
-            jobj4.put("ext",extTo);
+            jobj4.put("extFrom",extFrom);
+            jobj4.put("extTo",extTo);
 
             if(WebsocketPool.isExtWsOnline(extTo)){ //判断所拨打的分机是否在线，这是在线的情况
-                WebsocketPool.getOmTransferDao().ConnectExtToExt(null, Integer.parseInt(extFrom), Integer.parseInt(extTo));
-
-                jobj4.put("status","ExtOffline");
+                jobj4.put("status","ExtOnline");
                 jobj4.put("process","Connecting");
                 jobj3.put("data",jobj4);
                 session.getBasicRemote().sendText(jobj3.toJSONString());
+
+                WebsocketPool.getOmTransferDao().ConnectExtToExt(null, Integer.parseInt(extFrom), Integer.parseInt(extTo));
             }
             else{ //分机不在线
                 jobj4.put("status","ExtOffline");

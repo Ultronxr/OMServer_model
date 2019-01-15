@@ -141,15 +141,19 @@ public class OMEventListenerExecutor implements Runnable{
                         }
                     }
                     if(cnt == 2){ //分机拨分机的情况
-                        for(int i = 0; i < __GlobalWaitingQueue.getGlobalWaitingQueue().size(); i++){
-                            VisitorEntity visitorEntity = __GlobalWaitingQueue.getGlobalWaitingQueue().get(i);
-                            if(visitorEntity.getFrom().equals(strArray[0])
-                                    && visitorEntity.getExtid()==Integer.valueOf(strArray[1])){
-                                __GlobalWaitingQueue.getGlobalWaitingQueue().remove(visitorEntity);
+//                        for(int i = 0; i < __GlobalWaitingQueue.getGlobalWaitingQueue().size(); i++){
+//                            VisitorEntity visitorEntity = __GlobalWaitingQueue.getGlobalWaitingQueue().get(i);
+//                            if(visitorEntity.getFrom().equals(strArray[0])
+//                                    && visitorEntity.getExtid()==Integer.valueOf(strArray[1])){
+//                                //__GlobalWaitingQueue.getGlobalWaitingQueue().remove(visitorEntity);
+//
+//
+//
+//                                System.out.println("***********"+ __GlobalWaitingQueue.getGlobalWaitingQueue().size());
+//                            }
+//                        }
 
-                                System.out.println("***********"+ __GlobalWaitingQueue.getGlobalWaitingQueue().size());
-                            }
-                        }
+
 
                     }
 
