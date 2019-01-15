@@ -1,6 +1,6 @@
 package dao.impl;
 
-import utils.MyOMConfig;
+import utils.OMConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class OMTransferBase {
         BufferedReader in = null;
         String result = "";
         try {
-            URL realUrl = new URL(MyOMConfig.getTransferUrl());
+            URL realUrl = new URL(OMConfig.getTransferUrl());
             // 打开和URL之间的连接，设备地址和web远程端口
             URLConnection conn = realUrl.openConnection();
             // 设置通用的请求属性

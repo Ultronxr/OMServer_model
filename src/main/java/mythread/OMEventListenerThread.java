@@ -1,7 +1,8 @@
 package mythread;
 
 import mythreadexecutor.OMEventListenerExecutor;
-import utils.MyOMConfig;
+import utils.GetCurrentTime;
+import utils.OMConfig;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,7 +21,7 @@ public class OMEventListenerThread implements Runnable{
     private int omListenPort; //OM设备汇报事件的端口号
 
     public OMEventListenerThread(){
-        this.omListenPort = MyOMConfig.getListenPort();
+        this.omListenPort = OMConfig.getListenPort();
     }
 
     public static void start(){
@@ -31,7 +32,8 @@ public class OMEventListenerThread implements Runnable{
 
     @Override
     public void run(){
-        System.out.println("[*] "+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " OMEventListenerThread 线程启动...");
+        System.out.println("[*] "+ GetCurrentTime.formatedTime()+"mythread.OMEventListenerThread-run()");
+        System.out.println("    OMEventListenerThread 线程启动...");
 
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
@@ -45,8 +47,9 @@ public class OMEventListenerThread implements Runnable{
             while(flag){
                 clientSocket = serverSocket.accept();
 
-                System.out.println("[*] "+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                        + " OMEventListenerThread 线程获取与OM设备的socket连接："+clientSocket.getInetAddress()+":"+clientSocket.getPort());
+                System.out.println("[*] "+ GetCurrentTime.formatedTime()+"mythread.OMEventListenerThread-run()");
+                System.out.println("    OMEventListenerThread 线程获取与OM设备的socket连接："+clientSocket.getInetAddress()+":"+clientSocket.getPort());
+
                 executorService.execute(new OMEventListenerExecutor(clientSocket));
 
                 Thread.sleep(300);

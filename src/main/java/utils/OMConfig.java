@@ -2,7 +2,7 @@ package utils;
 
 import java.util.ResourceBundle;
 
-public class MyOMConfig {
+public class OMConfig {
     private static final String transferUrl;
     private static final int listenPort;
 

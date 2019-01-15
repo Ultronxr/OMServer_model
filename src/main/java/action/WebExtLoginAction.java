@@ -4,7 +4,8 @@ import dao.ExtJdbcDao;
 import dao.impl.ExtJdbcDaoImpl;
 import entity.ExtLoginEntity;
 import global.GlobalWebExtTokens;
-import utils.MyMD5Hash;
+import utils.GetCurrentTime;
+import utils.MD5Hash;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 
 public class WebExtLoginAction extends HttpServlet {
 
@@ -42,7 +42,7 @@ public class WebExtLoginAction extends HttpServlet {
 
             //extid+authcode然后进行MD5 hash作为token
             String tokenTemp = extLoginEntity.getExtid()+extLoginEntity.getAuthcode();
-            String tokenMd5 = MyMD5Hash.stringToMd5LowerCase(tokenTemp);
+            String tokenMd5 = MD5Hash.stringToMd5LowerCase(tokenTemp);
 
             if(GlobalWebExtTokens.getOnlineTokensMap().containsKey(tokenMd5)){
                 resData = "{\"result\":\"HAVELOGINED\"}";
@@ -62,7 +62,8 @@ public class WebExtLoginAction extends HttpServlet {
         pw.write(resData);
         pw.flush();
         //pw.close();
-        System.out.println("[*] src.main.java.action-WebExtLoginAction-doPost() 结果返回完成："+resData);
+        System.out.println("[*] "+ GetCurrentTime.formatedTime()+" action.WebExtLoginAction-doPost()");
+        System.out.println("    结果返回完成："+resData);
 
     }
 

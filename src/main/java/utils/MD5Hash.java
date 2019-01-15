@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MyMD5Hash {
+public class MD5Hash {
 
     public static String stringToMd5LowerCase(String str){
 

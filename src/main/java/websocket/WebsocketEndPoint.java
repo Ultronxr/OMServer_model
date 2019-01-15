@@ -7,6 +7,7 @@ import dao.impl.OMTransferDaoImpl;
 import entity.ExtLoginEntity;
 import entity.VisitorEntity;
 import global.GlobalWebExtTokens;
+import utils.GetCurrentTime;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -40,22 +41,19 @@ public class WebsocketEndPoint {
             this.extLoginEntity = GlobalWebExtTokens.getLoginTokensMap().get(this.token);
             GlobalWebExtTokens.getOnlineTokensMap().put(this.token, this.extLoginEntity);
 
-            System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onOpen() 新连接token："+this.token);
-            System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onOpen() 当前在线数："+GlobalWebExtTokens.getOnlineTokensMap().size());
-
-            //this.session.getBasicRemote().sendText(
-            //        "分机拨分机请发送命令：ConnectExtToExt:{\"attribute\":\"Connect\", \"extid1\":\"227\", \"extid2\":\"228\"}");
-
-            //String extLoginEntity_str = JSON.toJSONString(extLoginEntity);
-            //this.session.getBasicRemote().sendText(extLoginEntity_str);
+            System.out.println("[*] "+GetCurrentTime.formatedTime()+" websocket.WebsocketEndPoint-onOpen()");
+            System.out.println("    新连接token："+this.token);
+            System.out.println("    当前在线数："+GlobalWebExtTokens.getOnlineTokensMap().size());
 
             WebsocketPool.addWsEndPoint(this.extLoginEntity.getExtid(), this);
-            System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onOpen() 当前登录的是："+this.extLoginEntity.getExtid());
-            System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onOpen() 当前连接池大小："+WebsocketPool.getWsPoolSize());
+            System.out.println("[*] "+GetCurrentTime.formatedTime()+" websocket.WebsocketEndPoint-onOpen()");
+            System.out.println("    当前登录的是："+this.extLoginEntity.getExtid());
+            System.out.println("    当前连接池大小："+WebsocketPool.getWsPoolSize());
 
         }
         else{
-            System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onOpen() 拒绝访问！！！错误的token："+token);
+            System.out.println("[x] "+GetCurrentTime.formatedTime()+" websocket.WebsocketEndPoint-onOpen()");
+            System.out.println("    拒绝访问！！！错误的token："+token);
             session.close();
         }
     }
@@ -64,30 +62,58 @@ public class WebsocketEndPoint {
     public void onClose() throws IOException {
         this.session.close();
         GlobalWebExtTokens.getOnlineTokensMap().remove(this.token);
-        System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onClose() 连接关闭："+this.token);
+
+        System.out.println("[*] "+GetCurrentTime.formatedTime()+" websocket.WebsocketEndPoint-onClose()");
+        System.out.println("    连接关闭："+this.token);
 
         WebsocketPool.removeWsEndPoint(this.extLoginEntity.getExtid());
-        System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onClose() 连接池大小："+WebsocketPool.getWsPoolSize());
+        System.out.println("    连接池大小："+WebsocketPool.getWsPoolSize());
     }
 
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-        System.out.println("[*] src.main.java.websocket-WebsocketEndPoint-onMessage() 收到用户信息："+this.token + "：" + message);
-        session.getBasicRemote().sendText("{'response':'1'}");
-//        JSONObject jobj = (JSONObject) JSON.parse(message);
-//        if(jobj.getString("attr").equals("ConnectExtToExt")){
-//            System.out.println(jobj.getJSONObject("data").getString("extFrom"));
-//            System.out.println(jobj.getJSONObject("data").getString("extTo"));
-//
-//        }
-        new OMTransferDaoImpl().ConnectExtToExt(null, 227, 228);
+
+        System.out.println("[*] "+GetCurrentTime.formatedTime()+" websocket.WebsocketEndPoint-onMessage()");
+        System.out.println("    收到用户信息："+this.token + "：" + message);
+
+        JSONObject jobj1 = new JSONObject();
+        jobj1.put("response","1");
+        session.getBasicRemote().sendText(jobj1.toJSONString());
+
+        JSONObject jobj2 = (JSONObject) JSON.parse(message);
+
+        if(jobj2.getString("attr").equals("ConnectExtToExt")){
+            String extFrom = jobj2.getJSONObject("data").getString("extFrom");
+            String extTo = jobj2.getJSONObject("data").getString("extTo");
+
+            JSONObject jobj3 = new JSONObject(), jobj4 = new JSONObject();
+            jobj3.put("response","2");
+            jobj4.put("ext",extTo);
+
+            if(WebsocketPool.isExtWsOnline(extTo)){ //判断所拨打的分机是否在线，这是在线的情况
+                WebsocketPool.getOmTransferDao().ConnectExtToExt(null, Integer.parseInt(extFrom), Integer.parseInt(extTo));
+
+                jobj4.put("status","ExtOffline");
+                jobj4.put("process","Connecting");
+                jobj3.put("data",jobj4);
+                session.getBasicRemote().sendText(jobj3.toJSONString());
+            }
+            else{ //分机不在线
+                jobj4.put("status","ExtOffline");
+                jobj4.put("process","");
+                jobj3.put("data",jobj4);
+                session.getBasicRemote().sendText(jobj3.toJSONString());
+            }
+        }
+
 
     }
 
     @OnError
     public void onError(Session session, Throwable e) throws IOException {
         this.session.close();
-        System.out.println("[x] src.main.java.websocket-WebsocketEndPoint-onError() websocket连接错误："+this.token);
+        System.out.println("[x] "+GetCurrentTime.formatedTime()+" websocket.WebsocketEndPoint-onError()");
+        System.out.println("    websocket连接错误："+this.token);
     }
 
 

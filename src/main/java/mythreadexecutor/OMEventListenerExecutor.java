@@ -8,18 +8,12 @@ import entity.VisitorEntity;
 import global.__GlobalWaitingQueue;
 import org.dom4j.Document;
 import org.dom4j.Element;
-import utils.MyXmlParser;
-import utils.databases.MyMysql;
-import websocket.WebsocketPool;
+import utils.GetCurrentTime;
+import utils.XmlParser;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -30,16 +24,15 @@ public class OMEventListenerExecutor implements Runnable{
 
     private Socket clientSocket;
 
-    public OMEventListenerExecutor(){
-
-    }
+    public OMEventListenerExecutor(){}
 
     public OMEventListenerExecutor(Socket clientSocket){
         this.clientSocket = clientSocket;
     }
 
     public void execute(){
-        System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" 正在监听OM设备的事件汇报...");
+        System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
+        System.out.println("    正在监听OM设备的事件汇报...");
 
         InputStream inputStream = null;
 
@@ -63,7 +56,7 @@ public class OMEventListenerExecutor implements Runnable{
             //System.out.println(resultStr);
 
 
-            Document document = MyXmlParser.stringXmlParser(resultStr);
+            Document document = XmlParser.stringXmlParser(resultStr);
             Element rootElement = document.getRootElement();
 
             //监听事件Event
@@ -84,14 +77,14 @@ public class OMEventListenerExecutor implements Runnable{
 
                 //监听到系统启动事件
                 if(attr.contains("BOOTUP")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                            +" OM Event:BOOTUP 收到OM事件：OM系统启动");
+                    System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
+                    System.out.println("    OM Event:BOOTUP 收到OM事件：OM系统启动");
                     omConfigureDao.setExtGroup();
                 }
                 //来电前控制事件
                 else if(attr.contains("INVITE")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                            +" OM Event:INVITE 收到OM事件：外线来电-来电前控制");
+                    System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
+                    System.out.println("    OM Event:INVITE 收到OM事件：外线来电-来电前控制");
                     String visitorid = rootElement.element("visitor").attributeValue("id");
 
                     //直接把所有来电请求转接到分机组队列group1(坐席)中
@@ -100,8 +93,8 @@ public class OMEventListenerExecutor implements Runnable{
                 }
                 //分机响铃事件
                 else if(attr.contains("RING")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                            +" OM Event:RING 收到OM事件：分机振铃");
+                    System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
+                    System.out.println("    OM Event: RING 收到分机事件：分机响铃");
 
                     int cnt = 0;
                     String[] strArray = new String[2];
@@ -135,8 +128,8 @@ public class OMEventListenerExecutor implements Runnable{
                 }
                 //分机应答事件
                 else if(attr.contains("ANSWER")){
-                    System.out.println("[*] "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
-                            +" OM Event:ANSWER 收到OM事件：分机应答");
+                    System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
+                    System.out.println("    OM Event:ANSWER 收到OM事件：分机应答");
 
                     int cnt = 0;
                     String[] strArray = new String[2];

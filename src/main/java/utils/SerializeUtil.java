@@ -6,7 +6,7 @@ import java.io.*;
  * @Description: 将对象进行序列化与反序列化
  */
 
-public class MySerializeUtil implements Serializable{
+public class SerializeUtil implements Serializable{
 /*
     public static byte[] serializeList(List<?> list) {
         if (list == null || list.size() == 0) {

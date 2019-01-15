@@ -1,5 +1,9 @@
 package websocket;
 
+import dao.OMTransferDao;
+import dao.impl.OMTransferDaoImpl;
+import utils.GetCurrentTime;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +16,15 @@ public class WebsocketPool {
 
     private static Map<String, WebsocketEndPoint> wsPool = new HashMap<>();
     private static int size = 0;
+    private static OMTransferDao omTransferDao = new OMTransferDaoImpl();
 
-
-
+    //添加一个连接进入连接池
     public synchronized static void addWsEndPoint(String extid, WebsocketEndPoint wsed){
         WebsocketPool.wsPool.put(extid, wsed);
         ++size;
     }
 
+    //从连接池中删除一个连接
     public synchronized static void removeWsEndPoint(String extid){
         WebsocketPool.wsPool.remove(extid);
         --size;
@@ -34,7 +39,13 @@ public class WebsocketPool {
     public synchronized static WebsocketEndPoint getWsEndPoint(String extid){
         return WebsocketPool.wsPool.get(extid);
     }
-//192.168.0.150:8081
+
+    //判断一个分机的连接是否存在
+    public synchronized static boolean isExtWsOnline(String extid){
+        if(WebsocketPool.wsPool.get(extid)==null) return false;
+        else return true;
+    }
+
     //发送信息给指定分机
     public synchronized static void sendMessageToOneWsEndPoint(String extid, String msg){
         WebsocketEndPoint wsed =  WebsocketPool.wsPool.get(extid);
@@ -44,14 +55,16 @@ public class WebsocketPool {
                 //System.out.println("信息发送成功 : "+extid);
             } catch (IOException e) {
                 //e.printStackTrace();
-                System.out.println("[x] src.main.java.websocket-WebsocketPool-sendMessageToOneWsEndPoint()" +"\n"+
-                        "   异常：无法向指定EndPoint发送信息。");
+                System.out.println("[x] "+ GetCurrentTime.formatedTime()+" websocket.WebsocketPool-sendMessageToOneWsEndPoint()");
+                System.out.println("    Exception: 无法向指定EndPoint发送信息。");
             }
         }else {
-            System.out.println("[x] src.main.java.websocket-WebsocketPool-sendMessageToOneWsEndPoint()" +"\n"+
-                    "   错误：不存在指定的EndPoint："+extid);
+            System.out.println("[x] "+ GetCurrentTime.formatedTime()+" websocket.WebsocketPool-sendMessageToOneWsEndPoint()");
+            System.out.println("    Exception: 不存在指定的EndPoint："+extid);
         }
     }
+
+    public synchronized static OMTransferDao getOmTransferDao(){return WebsocketPool.omTransferDao;}
 
 
 }

@@ -12,9 +12,9 @@ import java.io.File;
  * @Description: XML解析工具类，使用DOM4J作为底层工具
  *
  */
-public class MyXmlParser {
+public class XmlParser {
 
-    public MyXmlParser(){
+    public XmlParser(){
 
     }
 

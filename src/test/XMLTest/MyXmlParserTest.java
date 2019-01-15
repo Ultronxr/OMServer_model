@@ -1,13 +1,8 @@
 package XMLTest;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import utils.MyXmlParser;
-
-import java.util.Iterator;
+import utils.XmlParser;
 
 public class MyXmlParserTest {
     public static void main(String [] args){
@@ -17,7 +12,7 @@ public class MyXmlParserTest {
 //                "  <ext id=\"208\" />\n" +
 //                "</Event>";
 //
-//        Document document = MyXmlParser.stringXmlParser(stringXml);
+//        Document document = XmlParser.stringXmlParser(stringXml);
         //System.out.println(document.getRootElement().getName());
         //System.out.println(document.getRootElement().attributeValue("attribute"));
 
@@ -47,7 +42,7 @@ public class MyXmlParserTest {
         String resultStr = str.substring(xmlStartIndex, xmlEndIndex+1);
         System.out.println(resultStr);
 
-        Document document = MyXmlParser.stringXmlParser(resultStr);
+        Document document = XmlParser.stringXmlParser(resultStr);
         Element rootElement = document.getRootElement();
         System.out.println(rootElement.getName());
     }
