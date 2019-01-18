@@ -1,8 +1,6 @@
 package mythreadexecutor;
 
-import dao.OMConfigureDao;
 import dao.OMTransferDao;
-import dao.impl.OMConfigureDaoImpl;
 import dao.impl.OMTransferDaoImpl;
 import entity.VisitorEntity;
 import org.dom4j.Document;
@@ -37,7 +35,6 @@ public class OMEventListenerExecutor implements Runnable{
 
         try{
 
-            OMConfigureDao omConfigureDao = new OMConfigureDaoImpl();
             OMTransferDao omTransferDao = new OMTransferDaoImpl();
 
             inputStream = clientSocket.getInputStream();
@@ -78,7 +75,7 @@ public class OMEventListenerExecutor implements Runnable{
                 if(attr.contains("BOOTUP")){
                     System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
                     System.out.println("    OM Event:BOOTUP 收到OM事件：OM系统启动");
-                    omConfigureDao.setExtGroup();
+                    omTransferDao.setExtGroup();
                 }
                 //来电前控制事件
                 else if(attr.contains("INVITE")){
