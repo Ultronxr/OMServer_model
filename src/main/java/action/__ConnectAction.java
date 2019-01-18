@@ -9,17 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class HoldAction extends HttpServlet {
+public class __ConnectAction extends HttpServlet {
 
     private OMTransferDao omTransferDao = new OMTransferDaoImpl();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String extid1 = request.getParameter("extid1");
+        String extid2 = request.getParameter("extid2");
 
-        int extid = Integer.valueOf(request.getParameter("extid"));
-
-        omTransferDao.Hold(null, extid);
-
+        omTransferDao.connectExtToExt(null, Integer.valueOf(extid1), Integer.valueOf(extid2));
     }
 
     @Override

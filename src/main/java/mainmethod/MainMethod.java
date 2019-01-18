@@ -1,6 +1,5 @@
 package mainmethod;
 
-import mythread.CmdTransferThread;
 import mythread.OMEventListenerThread;
 
 public class MainMethod {
@@ -11,7 +10,7 @@ public class MainMethod {
      */
     public static void main(String[] args){
 
-        //CmdTransferThread.start();
+        //__CmdTransferThread.start();
         OMEventListenerThread.start();
 
     }
@@ -22,7 +21,7 @@ public class MainMethod {
      */
     public static void StartMyListener(){
 
-        //CmdTransferThread.start();
+        //__CmdTransferThread.start();
         OMEventListenerThread.start();
 
     }

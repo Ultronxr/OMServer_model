@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ClearAction extends HttpServlet {
+public class __HoldAction extends HttpServlet {
 
     private OMTransferDao omTransferDao = new OMTransferDaoImpl();
 
@@ -18,7 +18,7 @@ public class ClearAction extends HttpServlet {
 
         int extid = Integer.valueOf(request.getParameter("extid"));
 
-        omTransferDao.Clear(null, extid);
+        omTransferDao.hold(null, extid);
 
     }
 

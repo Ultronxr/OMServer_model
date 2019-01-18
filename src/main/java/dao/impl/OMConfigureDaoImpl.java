@@ -60,10 +60,10 @@ public class OMConfigureDaoImpl implements OMConfigureDao {
                 "</group>\n" +
                 "</Control>";
 
-        OMTransferBase.OMTransferBase("配置分机组1", xml1);
-        OMTransferBase.OMTransferBase("配置分机组2", xml2);
-        OMTransferBase.OMTransferBase("配置分机组3", xml3);
-        OMTransferBase.OMTransferBase("配置分机组4", xml4);
+        OMTransferBase.omTransferBase("配置分机组1", xml1);
+        OMTransferBase.omTransferBase("配置分机组2", xml2);
+        OMTransferBase.omTransferBase("配置分机组3", xml3);
+        OMTransferBase.omTransferBase("配置分机组4", xml4);
 
         return true;
     }

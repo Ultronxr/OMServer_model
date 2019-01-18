@@ -5,7 +5,6 @@ import dao.OMTransferDao;
 import dao.impl.OMConfigureDaoImpl;
 import dao.impl.OMTransferDaoImpl;
 import entity.VisitorEntity;
-import global.__GlobalWaitingQueue;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import utils.GetCurrentTime;
@@ -53,7 +52,7 @@ public class OMEventListenerExecutor implements Runnable{
             int xmlStartIndex = str.indexOf("<");
             int xmlEndIndex = str.lastIndexOf(">");
             String resultStr = str.substring(xmlStartIndex, xmlEndIndex+1);
-            //System.out.println(resultStr);
+            System.out.println(resultStr);
 
 
             Document document = XmlParser.stringXmlParser(resultStr);
@@ -88,7 +87,7 @@ public class OMEventListenerExecutor implements Runnable{
                     String visitorid = rootElement.element("visitor").attributeValue("id");
 
                     //直接把所有来电请求转接到分机组队列group1(坐席)中
-                    omTransferDao.QueueExtGroup(Integer.valueOf(visitorid), 1);
+                    omTransferDao.queueExtGroup(Integer.valueOf(visitorid), 1);
 
                 }
                 //分机响铃事件

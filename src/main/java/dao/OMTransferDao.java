@@ -3,40 +3,45 @@ package dao;
 public interface OMTransferDao {
 
     /**
+     * 获取设备数字签名认证MD5字符串
+     */
+    String getSigString();
+
+    /**
      * 连接：分机呼分机
      *
      */
-    public boolean ConnectExtToExt(String param, int extid1, int extid2);
+    boolean connectExtToExt(String param, int extid1, int extid2);
 
     /**
      * 强拆（挂断）
      *
      */
-    public boolean Clear(String param, int id);
+    boolean clear(String param, int id);
 
     /**
      * 呼叫保持（保持）
      *
      */
-    public boolean Hold(String param, int id);
+    boolean hold(String param, int id);
 
     /**
      * 呼叫接回（抓回）
      *
      */
-    public boolean Unhold(String param, int id);
+    boolean unhold(String param, int id);
 
     /**
      * 来电转分机队列
      *
      */
-    public boolean QueueExt(int visitorid, int extid);
+    boolean queueExt(int visitorid, int extid);
 
     /**
      * 来电转分机组队列
      *
      */
-    public boolean QueueExtGroup(int visitorid, int groupid);
+    boolean queueExtGroup(int visitorid, int groupid);
 
 
 }

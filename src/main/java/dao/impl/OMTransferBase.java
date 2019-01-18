@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class OMTransferBase {
 
-    public static void OMTransferBase(String type, String xmlString){
+    public static void omTransferBase(String type, String xmlString){
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";

@@ -1,21 +1,25 @@
 package action;
 
-import entity.VisitorEntity;
-import global.__GlobalWaitingQueue;
+import dao.OMTransferDao;
+import dao.impl.OMTransferDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class GetWaitingQueueAction extends HttpServlet {
+public class __UnholdAction extends HttpServlet {
+
+    private OMTransferDao omTransferDao = new OMTransferDaoImpl();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<VisitorEntity> waitingQueue = __GlobalWaitingQueue.getGlobalWaitingQueue();
-        request.setAttribute("WaitingQueue", waitingQueue);
+
+        int extid = Integer.valueOf(request.getParameter("extid"));
+
+        omTransferDao.unhold(null, extid);
+
     }
 
     @Override

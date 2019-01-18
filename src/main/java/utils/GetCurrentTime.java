@@ -21,4 +21,6 @@ public class GetCurrentTime {
         return new SimpleDateFormat(formatStr).format(new Date());
     }
 
+    public static String sysTimestamp() { return String.valueOf(System.currentTimeMillis());  }
+
 }

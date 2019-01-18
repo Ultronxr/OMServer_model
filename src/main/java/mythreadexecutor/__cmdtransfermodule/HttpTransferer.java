@@ -1,4 +1,4 @@
-package mythreadexecutor.cmdtransfermodule;
+package mythreadexecutor.__cmdtransfermodule;
 
 import entity.__QueryEntity;
 

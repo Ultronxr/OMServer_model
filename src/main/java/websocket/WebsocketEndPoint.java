@@ -2,8 +2,6 @@ package websocket;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import dao.OMTransferDao;
-import dao.impl.OMTransferDaoImpl;
 import entity.ExtLoginEntity;
 import entity.VisitorEntity;
 import global.GlobalWebExtTokens;
@@ -97,7 +95,7 @@ public class WebsocketEndPoint {
                 jobj3.put("data",jobj4);
                 session.getBasicRemote().sendText(jobj3.toJSONString());
 
-                WebsocketPool.getOmTransferDao().ConnectExtToExt(null, Integer.parseInt(extFrom), Integer.parseInt(extTo));
+                WebsocketPool.getOmTransferDao().connectExtToExt(null, Integer.parseInt(extFrom), Integer.parseInt(extTo));
             }
             else{ //分机不在线
                 jobj4.put("status","ExtOffline");

@@ -1,24 +1,21 @@
 package action;
 
-import dao.OMTransferDao;
-import dao.impl.OMTransferDaoImpl;
+import entity.VisitorEntity;
+import global.__GlobalWaitingQueue;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class ConnectAction extends HttpServlet {
-
-    private OMTransferDao omTransferDao = new OMTransferDaoImpl();
+public class __GetWaitingQueueAction extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String extid1 = request.getParameter("extid1");
-        String extid2 = request.getParameter("extid2");
-
-        omTransferDao.ConnectExtToExt(null, Integer.valueOf(extid1), Integer.valueOf(extid2));
+        ArrayList<VisitorEntity> waitingQueue = __GlobalWaitingQueue.getGlobalWaitingQueue();
+        request.setAttribute("WaitingQueue", waitingQueue);
     }
 
     @Override
