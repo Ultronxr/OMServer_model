@@ -1,7 +1,7 @@
 package mythreadexecutor;
 
-import dao.OMTransferDao;
-import dao.impl.OMTransferDaoImpl;
+import dao.OMApiOrderDao;
+import dao.impl.OMApiOrderDaoImpl;
 import entity.VisitorEntity;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -29,13 +29,13 @@ public class OMEventListenerExecutor implements Runnable{
 
     public void execute(){
         System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
-        System.out.println("    正在监听OM设备的事件汇报...");
+        //System.out.println("    正在监听OM设备的事件汇报...");
 
         InputStream inputStream = null;
 
         try{
 
-            OMTransferDao omTransferDao = new OMTransferDaoImpl();
+            OMApiOrderDao omApiOrderDao = new OMApiOrderDaoImpl();
 
             inputStream = clientSocket.getInputStream();
 
@@ -75,7 +75,7 @@ public class OMEventListenerExecutor implements Runnable{
                 if(attr.contains("BOOTUP")){
                     System.out.println("[*] "+GetCurrentTime.formatedTime()+"mythreadexecutor.OMEventListenerExecutor-execute()");
                     System.out.println("    OM Event:BOOTUP 收到OM事件：OM系统启动");
-                    omTransferDao.setExtGroup();
+                    omApiOrderDao.setExtGroup();
                 }
                 //来电前控制事件
                 else if(attr.contains("INVITE")){
@@ -84,7 +84,7 @@ public class OMEventListenerExecutor implements Runnable{
                     String visitorid = rootElement.element("visitor").attributeValue("id");
 
                     //直接把所有来电请求转接到分机组队列group1(坐席)中
-                    omTransferDao.queueExtGroup(Integer.valueOf(visitorid), 1);
+                    omApiOrderDao.queueExtGroup(visitorid, "1");
 
                 }
                 //分机响铃事件

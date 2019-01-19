@@ -80,7 +80,7 @@ public class WebsocketEndPoint {
 
         JSONObject jobj2 = (JSONObject) JSON.parse(message);
 
-        if(jobj2.getString("attr").equals("ConnectExtToExt")){
+        if(jobj2.getString("attr").equals("ConnectExtToExt")){ //分机呼分机
             String extFrom = jobj2.getJSONObject("data").getString("extFrom");
             String extTo = jobj2.getJSONObject("data").getString("extTo");
 
@@ -95,7 +95,7 @@ public class WebsocketEndPoint {
                 jobj3.put("data",jobj4);
                 session.getBasicRemote().sendText(jobj3.toJSONString());
 
-                WebsocketPool.getOmTransferDao().connectExtToExt(null, Integer.parseInt(extFrom), Integer.parseInt(extTo));
+                WebsocketPool.getOmApiOrderDao().connectExtToExt(extFrom, extTo);
             }
             else{ //分机不在线
                 jobj4.put("status","ExtOffline");
@@ -103,6 +103,21 @@ public class WebsocketEndPoint {
                 jobj3.put("data",jobj4);
                 session.getBasicRemote().sendText(jobj3.toJSONString());
             }
+        }
+        else if(jobj2.getString("attr").equals("ConnectExtToOuter")){ //分机呼外部电话
+            String extFrom = jobj2.getJSONObject("data").getString("extFrom");
+            String outerTo = jobj2.getJSONObject("data").getString("outerTo");
+
+            JSONObject jobj3 = new JSONObject(), jobj4 = new JSONObject();
+            jobj3.put("response","2");
+            jobj4.put("extFrom",extFrom);
+            jobj4.put("outerTo",outerTo);
+            jobj4.put("status","");
+            jobj4.put("process","Connecting");
+            jobj3.put("data",jobj4);
+            session.getBasicRemote().sendText(jobj3.toJSONString());
+
+            WebsocketPool.getOmApiOrderDao().connectExtToOuter(extFrom, outerTo, null);
         }
 
 

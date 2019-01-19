@@ -1,12 +1,12 @@
 package dao.impl;
 
-import dao.OMTransferDao;
+import dao.OMApiOrderDao;
 import utils.GetCurrentTime;
 import utils.MD5Hash;
 import utils.OMConfig;
 import utils.RandomNumber;
 
-public class OMTransferDaoImpl implements OMTransferDao {
+public class OMApiOrderDaoImpl implements OMApiOrderDao {
 
     @Override
     public String getSigString(){
@@ -91,10 +91,9 @@ public class OMTransferDaoImpl implements OMTransferDao {
 
     /**
      * 连接：分机呼分机
-     *
      */
     @Override
-    public boolean connectExtToExt(String param, int extid1, int extid2){
+    public boolean connectExtToExt(String extid1, String extid2){
 
         String xmlStr = getSigString() +
                 "<Transfer attribute=\"Connect\">\n" +
@@ -106,12 +105,41 @@ public class OMTransferDaoImpl implements OMTransferDao {
         return true;
     }
 
+
+    /**
+     * 连接：分机呼外部电话
+     */
+    @Override
+    public boolean connectExtToOuter(String extid, String outerto, String trunkid){
+
+        String xmlStr = getSigString();
+
+        if(trunkid == null || trunkid.equals(""))
+            xmlStr +=
+                    "<Transfer attribute=\"Connect\">\n" +
+                    "    <ext id=\""+extid+"\"/>\n" +
+                    "    <outer to=\""+outerto+"\"/>\n" +
+                    "</Transfer>";
+
+        else
+            xmlStr +=
+                    "<Transfer attribute=\"Connect\">\n" +
+                    "    <ext id=\""+extid+"\"/>\n" +
+                    "    <trunk id=\""+trunkid+"\"/>\n" +
+                    "    <outer to=\""+outerto+"\"/>\n" +
+                    "</Transfer>";
+
+        OMTransferBase.omTransferBase("Connect 连接：分机呼外部电话", xmlStr);
+
+        return true;
+    }
+
     /**
      * 强拆（挂断）
      *
      */
     @Override
-    public boolean clear(String param, int id){
+    public boolean clear(String param, String id){
 
         String xmlStr = getSigString() +
                 "<Control attribute=\"Clear\">\n" +
@@ -127,10 +155,10 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean hold(String param, int id){
+    public boolean hold(String extid){
         String xmlStr = getSigString() +
                 "<Control attribute=\"Hold\">\n" +
-                "    <ext id=\""+id+"\"/>\n" +
+                "    <ext id=\""+extid+"\"/>\n" +
                 "</Control>";
         OMTransferBase.omTransferBase("Hold 呼叫保持（保持）", xmlStr);
 
@@ -142,10 +170,10 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean unhold(String param, int id){
+    public boolean unhold(String extid){
         String xmlStr = getSigString() +
                 "<Control attribute=\"Unhold\">\n" +
-                "    <ext id=\""+id+"\"/>\n" +
+                "    <ext id=\""+extid+"\"/>\n" +
                 "</Control>";
         OMTransferBase.omTransferBase("Unhold 呼叫接回（抓回）", xmlStr);
 
@@ -157,7 +185,7 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean queueExt(int visitorid, int extid){
+    public boolean queueExt(String visitorid, String extid){
 
         String xmlStr = getSigString() +
                 "<Transfer attribute=\"Queue\">\n" +
@@ -174,7 +202,7 @@ public class OMTransferDaoImpl implements OMTransferDao {
      *
      */
     @Override
-    public boolean queueExtGroup(int visitorid, int groupid){
+    public boolean queueExtGroup(String visitorid, String groupid){
         String xmlStr = getSigString() +
                 "<Transfer attribute=\"Queue\">\n" +
                 "  <visitor id=\""+visitorid+"\"/>\n" +

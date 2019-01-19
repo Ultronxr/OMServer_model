@@ -1,7 +1,7 @@
 package websocket;
 
-import dao.OMTransferDao;
-import dao.impl.OMTransferDaoImpl;
+import dao.OMApiOrderDao;
+import dao.impl.OMApiOrderDaoImpl;
 import utils.GetCurrentTime;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class WebsocketPool {
 
     private static Map<String, WebsocketEndPoint> wsPool = new HashMap<>();
     private static int size = 0;
-    private static OMTransferDao omTransferDao = new OMTransferDaoImpl();
+    private static OMApiOrderDao omApiOrderDao = new OMApiOrderDaoImpl();
 
     //添加一个连接进入连接池
     public synchronized static void addWsEndPoint(String extid, WebsocketEndPoint wsed){
@@ -64,7 +64,7 @@ public class WebsocketPool {
         }
     }
 
-    public synchronized static OMTransferDao getOmTransferDao(){return WebsocketPool.omTransferDao;}
+    public synchronized static OMApiOrderDao getOmApiOrderDao(){return WebsocketPool.omApiOrderDao;}
 
 
 }

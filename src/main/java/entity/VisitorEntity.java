@@ -6,8 +6,8 @@ public class VisitorEntity implements Serializable {
     private int id; //来电编号
     private String from; //电话号码
     private String to; //中继线
-    private int callid; //没有实际作用的参数，但是设备需要
-    private int extid; //转向分机编号
+    private String callid; //没有实际作用的参数，但是设备需要
+    private String extid; //转向分机编号
     private String outer; //转向外部电话的号码
     private String state; //通话状态
 
@@ -38,19 +38,19 @@ public class VisitorEntity implements Serializable {
         this.to = to;
     }
 
-    public int getCallid() {
+    public String getCallid() {
         return callid;
     }
 
-    public void setCallid(int callid) {
+    public void setCallid(String callid) {
         this.callid = callid;
     }
 
-    public int getExtid() {
+    public String getExtid() {
         return extid;
     }
 
-    public void setExtid(int extid) {
+    public void setExtid(String extid) {
         this.extid = extid;
     }
 
