@@ -26,7 +26,7 @@ public class WebsocketPool {
 
     //从连接池中删除一个连接
     public synchronized static void removeWsEndPoint(String extid){
-        WebsocketPool.wsPool.remove(extid);
+         WebsocketPool.wsPool.remove(extid);
         --size;
     }
 
